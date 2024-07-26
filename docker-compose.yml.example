@@ -4,20 +4,22 @@ services:
     build: .
     ports:
       - "your_webhook_port:6969"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
     environment:
       - DOMAIN_NAME=your_domain_name
-      - TG_API_URL=your_tg_api_url
+      - TG_API_URL=https://api.telegram.org
       - TG_BOT_TOKEN=your_bot_token
       - WEBHOOK_PORT=your_webhook_port
-  #     - DATABASE_URL=postgres://your_db_username:your_db_password@localhost:your_db_port/your_db_name
-  # db:
-  #   image: "postgres:15.7-bullseye"
-  #   volumes:
-  #     - $HOME/db-data:/var/lib/postgresql/data
-  #     - ./db-init:/docker-entrypoint-initdb.d
-  #   ports:
-  #     - "your_db_port:5432"
-  #   environment:
-  #     - POSTGRES_USER=your_db_username
-  #     - POSTGRES_PASSWORD=your_db_password
-  #     - POSTGRES_DB=your_db_name
+      - DATABASE_URL=postgres://your_db_username:your_db_password@host.docker.internal:your_db_port/your_db_name
+  db:
+    image: "postgres:15.7-bullseye"
+    volumes:
+      - $HOME/db-data:/var/lib/postgresql/data
+      - ./db-init:/docker-entrypoint-initdb.d
+    ports:
+      - "your_db_port:5432"
+    environment:
+      - POSTGRES_USER=your_db_username
+      - POSTGRES_PASSWORD=your_db_password
+      - POSTGRES_DB=your_db_name
