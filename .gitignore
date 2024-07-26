@@ -1,0 +1,19 @@
+# Binaries
+bin/
+bin/*
+
+# Test binary, build with `go test -c`
+*.test
+
+# Output of the go coverage tool, specifically when used with LiteIDE
+*.out
+
+# Generated files
+docker-compose.yml
+db-init/
+db-init/*
+
+# IDE
+.vscode/
+.vscode/*
+.history/

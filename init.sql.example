@@ -1,0 +1,38 @@
+CREATE TABLE "users"(
+    "id" BIGINT NOT NULL,
+    "tg_id" BIGINT NOT NULL,
+    "chat_id" BIGINT NOT NULL,
+    "is_admin" BOOLEAN NOT NULL,
+    "has_access" BOOLEAN NOT NULL
+);
+CREATE INDEX "user_tg_id_index" ON
+    "users"("tg_id");
+ALTER TABLE
+    "users" ADD PRIMARY KEY("id");
+CREATE TABLE "tasks"(
+    "id" BIGINT NOT NULL,
+    "url" TEXT NOT NULL,
+    "xpath" TEXT NOT NULL,
+    "prev_content" TEXT NOT NULL
+);
+CREATE INDEX "tasks_url_xpath_index" ON
+    "tasks"("url", "xpath");
+ALTER TABLE
+    "tasks" ADD PRIMARY KEY("id");
+CREATE TABLE "subscriptions"(
+    "id" BIGINT NOT NULL,
+    "name" TEXT NOT NULL,
+    "user_id" BIGINT NOT NULL,
+    "task_id" BIGINT NOT NULL
+);
+CREATE INDEX "subscriptions_user_id_task_id_index" ON
+    "subscriptions"("user_id", "task_id");
+ALTER TABLE
+    "subscriptions" ADD PRIMARY KEY("id");
+ALTER TABLE
+    "subscriptions" ADD CONSTRAINT "subscriptions_user_id_foreign" FOREIGN KEY("user_id") REFERENCES "users"("id");
+ALTER TABLE
+    "subscriptions" ADD CONSTRAINT "subscriptions_task_id_foreign" FOREIGN KEY("task_id") REFERENCES "tasks"("id");
+
+INSERT INTO "users"("tg_id", "chat_id", "is_admin", "has_access")
+VALUES(your_telegram_id, -1, true, true);
