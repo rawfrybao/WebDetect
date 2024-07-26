@@ -1,5 +1,5 @@
 CREATE TABLE "users"(
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "tg_id" BIGINT NOT NULL,
     "chat_id" BIGINT NOT NULL,
     "is_admin" BOOLEAN NOT NULL,
@@ -10,7 +10,7 @@ CREATE INDEX "user_tg_id_index" ON
 ALTER TABLE
     "users" ADD PRIMARY KEY("id");
 CREATE TABLE "tasks"(
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "url" TEXT NOT NULL,
     "xpath" TEXT NOT NULL,
     "prev_content" TEXT NOT NULL
@@ -20,7 +20,7 @@ CREATE INDEX "tasks_url_xpath_index" ON
 ALTER TABLE
     "tasks" ADD PRIMARY KEY("id");
 CREATE TABLE "subscriptions"(
-    "id" BIGINT NOT NULL,
+    "id" BIGSERIAL NOT NULL,
     "name" TEXT NOT NULL,
     "user_id" BIGINT NOT NULL,
     "task_id" BIGINT NOT NULL
