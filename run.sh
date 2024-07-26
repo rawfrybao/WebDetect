@@ -43,15 +43,6 @@ then
     exit 1
 fi
 
-echo "Enter the Telegram API Server (Empty for default https://api.telegram.org):"
-read tgapi
-
-if [ -z "$tgapi" ]
-then
-    tgapi=https://api.telegram.org
-fi
-
-
 echo "Enter your PostgreSQL database name:"
 read dbname
 
@@ -92,7 +83,6 @@ rm -rf docker-compose.yml
 cp docker-compose.yml.example docker-compose.yml
 sed -i "s/your_webhook_port/$webhookport/g" docker-compose.yml
 sed -i "s/your_domain_name/$domain/g" docker-compose.yml
-sed -i "s/your_tg_api_url/$tgapi/g" docker-compose.yml
 sed -i "s/your_bot_token/$token/g" docker-compose.yml
 sed -i "s/your_db_name/$dbname/g" docker-compose.yml
 sed -i "s/your_db_username/$dbuser/g" docker-compose.yml
