@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"webdetect/internal/server"
+	"webdetect/internal/webhook"
 )
 
 func main() {
