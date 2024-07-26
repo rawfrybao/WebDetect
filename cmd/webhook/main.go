@@ -19,13 +19,13 @@ func main() {
 		os.Exit(1)
 	}
 
-	// err := webhook.SetupWebhook()
-	// if err != nil {
-	// 	fmt.Println(err.Error())
-	// 	os.Exit(1)
-	// }
+	err := webhook.SetupWebhook()
+	if err != nil {
+		fmt.Println(err.Error())
+		os.Exit(1)
+	}
 
-	// go webhook.Monitor()
+	go webhook.Monitor()
 
 	server.Start()
 }
