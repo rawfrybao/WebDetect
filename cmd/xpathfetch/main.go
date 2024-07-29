@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"os"
 	"webdetect/internal/detect"
+	"webdetect/internal/logger"
 
 	"github.com/akamensky/argparse"
 )
@@ -21,5 +22,5 @@ func main() {
 
 	content := detect.GetContent(*url, *xpath)
 
-	fmt.Println(content)
+	logger.Log(content)
 }

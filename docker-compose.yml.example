@@ -6,6 +6,8 @@ services:
       - "your_webhook_port:6969"
     extra_hosts:
       - "host.docker.internal:host-gateway"
+    volumes:
+     - $HOME/webdetect-log:/app/log
     environment:
       - DOMAIN_NAME=your_domain_name
       - TG_API_URL=https://api.telegram.org

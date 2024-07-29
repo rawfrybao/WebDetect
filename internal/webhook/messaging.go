@@ -3,10 +3,10 @@ package webhook
 import (
 	"bytes"
 	"encoding/json"
-	"fmt"
 	"net/http"
 	"os"
 	"strings"
+	"webdetect/internal/logger"
 )
 
 func SendMessage(message TgMessage) {
@@ -18,8 +18,8 @@ func SendMessage(message TgMessage) {
 
 	url := apiURL + "/bot" + botToken + "/sendMessage"
 
-	fmt.Println(url)
-	fmt.Println(message)
+	logger.Log(url)
+	logger.Log(message)
 
 	jsonData, err := json.Marshal(message)
 	if err != nil {

@@ -1,28 +1,16 @@
 package main
 
 import (
-	"fmt"
 	"os"
+	"webdetect/internal/logger"
 	"webdetect/internal/server"
 	"webdetect/internal/webhook"
 )
 
 func main() {
-	tgBotId := os.Getenv("TG_BOT_TOKEN")
-	if tgBotId == "" {
-		fmt.Println("TG_BOT_TOKEN is not set")
-		os.Exit(1)
-	}
-
-	apiURL := os.Getenv("TG_API_URL")
-	if apiURL == "" {
-		fmt.Println("TG_API_URL is not set")
-		os.Exit(1)
-	}
-
 	err := webhook.SetupWebhook()
 	if err != nil {
-		fmt.Println(err.Error())
+		logger.Log(err.Error())
 		os.Exit(1)
 	}
 

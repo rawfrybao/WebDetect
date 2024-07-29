@@ -1,12 +1,13 @@
 package webhook
 
 import (
-	"bytes"
 	"encoding/json"
-	"fmt"
+	"io"
 	"net/http"
+	"net/url"
 	"os"
 	"strings"
+	"webdetect/internal/logger"
 )
 
 type WebhookInfo struct {
@@ -34,18 +35,24 @@ func SetupWebhook() error {
 
 	botToken := os.Getenv("TG_BOT_TOKEN")
 	if botToken == "" {
-		return fmt.Errorf("TG_BOT_TOKEN is not set")
+		botToken = "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
+		//return fmt.Errorf("TG_BOT_TOKEN is not set")
 	}
+	logger.Log("Bot token: ", botToken)
 
 	apiURL := os.Getenv("TG_API_URL")
 	if apiURL == "" {
-		return fmt.Errorf("TG_API_URL is not set")
+		apiURL = "http://127.0.0.1:8989"
+		//return fmt.Errorf("TG_API_URL is not set")
 	}
 	apiURL = strings.TrimSuffix(apiURL, "/")
 
-	url := apiURL + "/bot" + botToken + "/setWebhook"
+	apiURL = apiURL + "/bot" + botToken + "/setWebhook"
 
 	domain := os.Getenv("DOMAIN_NAME")
+	if domain == "" {
+		domain = "https://example.com"
+	}
 	domain = strings.TrimSuffix(domain, "/")
 	domain = strings.TrimPrefix(domain, "https://")
 
@@ -53,24 +60,23 @@ func SetupWebhook() error {
 		Url: "https://" + domain,
 	}
 
-	jsonData, err := json.Marshal(webhook)
+	form := url.Values{}
+	form.Add("url", webhook.Url)
+
+	logger.Log("Sending request to: ", apiURL)
+	logger.Log("Prarams: ", form)
+	// Send the POST request
+	resp, err := http.PostForm(apiURL, form)
 	if err != nil {
 		return err
 	}
 
-	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
-	if err != nil {
-		return err
-	}
-
-	req.Header.Set("Content-Type", "application/json")
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return err
-	}
 	defer resp.Body.Close()
+
+	_, err = io.ReadAll(resp.Body)
+	if err != nil {
+		return err
+	}
 
 	return nil
 }
@@ -78,12 +84,12 @@ func SetupWebhook() error {
 func CheckHasWebhook() bool {
 	botToken := os.Getenv("TG_BOT_TOKEN")
 	if botToken == "" {
-		return false
+		botToken = "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
 	}
 
 	apiURL := os.Getenv("TG_API_URL")
 	if apiURL == "" {
-		return false
+		apiURL = "http://127.0.0.1:8989"
 	}
 	apiURL = strings.TrimSuffix(apiURL, "/")
 
