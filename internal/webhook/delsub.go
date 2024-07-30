@@ -59,7 +59,7 @@ func handleDeleteSubscription(req api.HandleUpdateJSONRequestBody, text string) 
 			ParseMode:       "MarkdownV2",
 			ReplyParameters: &replyParams,
 		}
-		go SendMessage(message)
+		SendMessage(message)
 		return
 	}
 
@@ -77,5 +77,5 @@ func handleDeleteSubscription(req api.HandleUpdateJSONRequestBody, text string) 
 		ReplyParameters: &replyParams,
 	}
 
-	go SendMessage(message)
+	SendMessage(message)
 }

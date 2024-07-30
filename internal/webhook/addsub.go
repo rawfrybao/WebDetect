@@ -37,7 +37,7 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 			ParseMode:       "MarkdownV2",
 			ReplyParameters: &replyParams,
 		}
-		go SendMessage(message)
+		SendMessage(message)
 		return
 	}
 
@@ -57,7 +57,7 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 			ParseMode:       "MarkdownV2",
 			ReplyParameters: &replyParams,
 		}
-		go SendMessage(message)
+		SendMessage(message)
 		return
 	}
 
@@ -78,7 +78,7 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 			ParseMode:       "MarkdownV2",
 			ReplyParameters: &replyParams,
 		}
-		go SendMessage(message)
+		SendMessage(message)
 		return
 	}
 
@@ -106,7 +106,7 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 			ParseMode:       "MarkdownV2",
 			ReplyParameters: &replyParams,
 		}
-		go SendMessage(message)
+		SendMessage(message)
 		return
 	}
 
@@ -126,6 +126,5 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 		ParseMode:       "MarkdownV2",
 		ReplyParameters: &replyParams,
 	}
-	go SendMessage(message)
-
+	SendMessage(message)
 }
