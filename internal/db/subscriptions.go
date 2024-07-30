@@ -46,7 +46,7 @@ func NewSubscription(tgID int64, name string, url string, xpath string) error {
 		return fmt.Errorf("could not get task by info: %w", err)
 	}
 
-	_, err = conn.Exec(context.Background(), "INSERT INTO subscriptions (name, user_id, task_id) VALUES ($1, $2)", name, userID, taskId)
+	_, err = conn.Exec(context.Background(), "INSERT INTO subscriptions (name, user_id, task_id) VALUES ($1, $2, $3)", name, userID, taskId)
 	if err != nil {
 		return fmt.Errorf("could not insert into database: %w", err)
 	}

@@ -12,6 +12,8 @@ bin/*
 docker-compose.yml
 db-init/
 db-init/*
+log/
+log/*
 
 # IDE
 .vscode/
