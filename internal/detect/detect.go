@@ -37,6 +37,9 @@ func GetContent(url, xpath string) string {
 		log.Println("No nodes found")
 		logger.Log("No nodes found")
 	}
-
-	return htmlquery.InnerText(nodes[0])
+	if len(nodes) > 0 {
+		return htmlquery.InnerText(nodes[0])
+	} else {
+		return ""
+	}
 }
