@@ -64,6 +64,22 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 	if len(strings.Split(text, " ")) != 3 {
 		log.Println("Invalid number of arguments")
 		logger.Log("Invalid number of arguments")
+		msg := "使用方法  \n"
+		msg += "/addsub <name> <url> <xpath>  \n"
+
+		replyParams := TgMessageReplyParameters{
+			MessageID: *req.Message.MessageID,
+			ChatID:    *req.Message.Chat.ID,
+		}
+
+		message := TgMessage{
+			ChatID:          *req.Message.Chat.ID,
+			Text:            msg,
+			ParseMode:       "MarkdownV2",
+			ReplyParameters: &replyParams,
+		}
+		go SendMessage(message)
+		return
 	}
 
 	args := strings.Split(text, " ")
@@ -97,12 +113,18 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 	log.Println("Subscription added", name, url, xpath)
 	logger.Log("Subscription added", name, url, xpath)
 
+	replyParams := TgMessageReplyParameters{
+		MessageID: *req.Message.MessageID,
+		ChatID:    *req.Message.Chat.ID,
+	}
+
 	msg := "添加 " + name + " 成功"
 
 	message := TgMessage{
-		ChatID:    *req.Message.Chat.ID,
-		Text:      msg,
-		ParseMode: "MarkdownV2",
+		ChatID:          *req.Message.Chat.ID,
+		Text:            msg,
+		ParseMode:       "MarkdownV2",
+		ReplyParameters: &replyParams,
 	}
 	go SendMessage(message)
 

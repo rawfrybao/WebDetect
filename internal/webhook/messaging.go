@@ -26,11 +26,13 @@ func SendMessage(message TgMessage) {
 
 	jsonData, err := json.Marshal(message)
 	if err != nil {
+		logger.Log(err.Error())
 		return
 	}
 
 	req, err := http.NewRequest("POST", url, bytes.NewBuffer(jsonData))
 	if err != nil {
+		logger.Log(err.Error())
 		return
 	}
 	req.Header.Set("Content-Type", "application/json")
@@ -38,6 +40,7 @@ func SendMessage(message TgMessage) {
 	client := &http.Client{}
 	resp, err := client.Do(req)
 	if err != nil {
+		logger.Log(err.Error())
 		return
 	}
 	defer resp.Body.Close()
