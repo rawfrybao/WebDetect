@@ -32,9 +32,9 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 		msg := "遇到bug了"
 
 		message := TgMessage{
-			ChatID:          *req.Message.Chat.ID,
-			Text:            msg,
-			ParseMode:       "MarkdownV2",
+			ChatID: *req.Message.Chat.ID,
+			Text:   msg,
+
 			ReplyParameters: &replyParams,
 		}
 		SendMessage(message)
@@ -52,9 +52,9 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 		}
 
 		message := TgMessage{
-			ChatID:          *req.Message.Chat.ID,
-			Text:            msg,
-			ParseMode:       "MarkdownV2",
+			ChatID: *req.Message.Chat.ID,
+			Text:   msg,
+
 			ReplyParameters: &replyParams,
 		}
 		SendMessage(message)
@@ -73,9 +73,9 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 		}
 
 		message := TgMessage{
-			ChatID:          *req.Message.Chat.ID,
-			Text:            msg,
-			ParseMode:       "MarkdownV2",
+			ChatID: *req.Message.Chat.ID,
+			Text:   msg,
+
 			ReplyParameters: &replyParams,
 		}
 		SendMessage(message)
@@ -101,9 +101,9 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 		msg += err.Error()
 
 		message := TgMessage{
-			ChatID:          *req.Message.Chat.ID,
-			Text:            msg,
-			ParseMode:       "MarkdownV2",
+			ChatID: *req.Message.Chat.ID,
+			Text:   msg,
+
 			ReplyParameters: &replyParams,
 		}
 		SendMessage(message)
@@ -121,9 +121,9 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 	msg := "添加 " + name + " 成功"
 
 	message := TgMessage{
-		ChatID:          *req.Message.Chat.ID,
-		Text:            msg,
-		ParseMode:       "MarkdownV2",
+		ChatID: *req.Message.Chat.ID,
+		Text:   msg,
+
 		ReplyParameters: &replyParams,
 	}
 	SendMessage(message)

@@ -41,9 +41,9 @@ func handleFetch(req api.HandleUpdateJSONRequestBody, text string) {
 		}
 
 		message := TgMessage{
-			ChatID:          *req.Message.Chat.ID,
-			Text:            msg,
-			ParseMode:       "MarkdownV2",
+			ChatID: *req.Message.Chat.ID,
+			Text:   msg,
+
 			ReplyParameters: &replyParams,
 		}
 
@@ -59,9 +59,9 @@ func handleFetch(req api.HandleUpdateJSONRequestBody, text string) {
 	}
 
 	message := TgMessage{
-		ChatID:          *req.Message.Chat.ID,
-		Text:            content,
-		ParseMode:       "MarkdownV2",
+		ChatID: *req.Message.Chat.ID,
+		Text:   content,
+
 		ReplyParameters: &replyParams,
 	}
 

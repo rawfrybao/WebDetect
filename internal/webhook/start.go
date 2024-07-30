@@ -22,9 +22,9 @@ func handleStart(req api.HandleUpdateJSONRequestBody) {
 	msg += "/delsub <name> - 删除订阅  \n"
 
 	message := TgMessage{
-		ChatID:          *req.Message.Chat.ID,
-		Text:            msg,
-		ParseMode:       "MarkdownV2",
+		ChatID: *req.Message.Chat.ID,
+		Text:   msg,
+
 		ReplyParameters: &replyParams,
 	}
 

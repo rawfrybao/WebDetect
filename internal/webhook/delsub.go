@@ -54,9 +54,9 @@ func handleDeleteSubscription(req api.HandleUpdateJSONRequestBody, text string) 
 		msg += err.Error()
 
 		message := TgMessage{
-			ChatID:          *req.Message.Chat.ID,
-			Text:            msg,
-			ParseMode:       "MarkdownV2",
+			ChatID: *req.Message.Chat.ID,
+			Text:   msg,
+
 			ReplyParameters: &replyParams,
 		}
 		SendMessage(message)
@@ -71,9 +71,9 @@ func handleDeleteSubscription(req api.HandleUpdateJSONRequestBody, text string) 
 	msg := "删除成功（也许）"
 
 	message := TgMessage{
-		ChatID:          *req.Message.Chat.ID,
-		Text:            msg,
-		ParseMode:       "MarkdownV2",
+		ChatID: *req.Message.Chat.ID,
+		Text:   msg,
+
 		ReplyParameters: &replyParams,
 	}
 
