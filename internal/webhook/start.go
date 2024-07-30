@@ -48,6 +48,7 @@ func handleStart(req api.HandleUpdateJSONRequestBody) {
 	msg += "/listsub - 列出所有订阅  \n"
 	msg += "/addsub <name> <url> <xpath> - 添加订阅  \n"
 	msg += "/delsub <name> - 删除订阅  \n"
+	msg += "/myid - 获取你的TG ID  \n"
 
 	message := TgMessage{
 		ChatID: *req.Message.Chat.ID,
