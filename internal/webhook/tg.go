@@ -36,7 +36,7 @@ func NotifyUsers(taskId int64, content, prev_content string) {
 		log.Println(subscription.Name, prev_content, content)
 		logger.Log(subscription.Name, prev_content, content)
 		// Notify user
-		text := "#" + subscription.Name + "  \nFrom: " + prev_content + "  \nTo: " + content + "  \n[Link](" + task.URL + ")"
+		text := subscription.Name + "  \nFrom: " + prev_content + "  \nTo: " + content + "  \n[Link](" + task.URL + ")"
 
 		message := TgMessage{
 			ChatID: user.ChatID,
