@@ -30,10 +30,14 @@ func (h *UpdateHandler) HandleUpdate(w http.ResponseWriter, r *http.Request) *ap
 		go handleStart(req)
 	case "/fetch":
 		go handleFetch(req, text)
+	case "/listsub":
+		go handleListSubscription(req)
 	case "/addsub":
 		go handleAddSubscription(req, text)
 	case "/delsub":
 		go handleDeleteSubscription(req, text)
+	case "/giveaccess":
+		go handleGiveAccess(req)
 	}
 
 	code := http.StatusOK

@@ -94,3 +94,35 @@ func DeleteSubscription(tgID int64, name string) error {
 
 	return nil
 }
+
+func GetSubscriptions(tgID int64) ([]string, error) {
+
+	userID, err := GetUserIDByTGID(tgID)
+	if err != nil {
+		return nil, fmt.Errorf("could not get user id by tg id: %w", err)
+	}
+
+	conn, err := NewPostgresConnection()
+	if err != nil {
+		return nil, fmt.Errorf("could not connect to database: %w", err)
+	}
+	defer conn.Close(context.Background())
+
+	rows, err := conn.Query(context.Background(), "SELECT name FROM subscriptions WHERE user_id = $1", userID)
+	if err != nil {
+		return nil, fmt.Errorf("could not query database: %w", err)
+	}
+	defer rows.Close()
+
+	subs := make([]string, 0)
+	for rows.Next() {
+		var name string
+		err = rows.Scan(&name)
+		if err != nil {
+			return nil, fmt.Errorf("could not scan row: %w", err)
+		}
+		subs = append(subs, name)
+	}
+
+	return subs, nil
+}

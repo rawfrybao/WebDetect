@@ -50,6 +50,20 @@ components:
                     $ref: '#/components/schemas/user'
                 text:
                     type: string
+                reply_to_message:
+                    $ref: '#/components/schemas/reply_to_message'
+        reply_to_message:
+            type: object
+            properties:
+                chat:
+                    $ref: '#/components/schemas/chat'
+                message_id:
+                    type: integer
+                    format: int64
+                from:
+                    $ref: '#/components/schemas/user'
+                text:
+                    type: string
         chat:
             type: object
             properties:
