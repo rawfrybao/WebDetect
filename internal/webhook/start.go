@@ -1,12 +1,12 @@
 package webhook
 
 import (
-	"fmt"
+	"log"
 	"webdetect/internal/api"
 	"webdetect/internal/logger"
 )
 
 func handleStart(req api.HandleUpdateJSONRequestBody) {
-	fmt.Println("Start command", *req.Message.From.ID)
+	log.Println("Start command", *req.Message.From.ID)
 	logger.Log("Start command", *req.Message.From.ID)
 }

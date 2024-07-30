@@ -1,7 +1,7 @@
 package webhook
 
 import (
-	"fmt"
+	"log"
 	"strings"
 	"webdetect/internal/api"
 	"webdetect/internal/detect"
@@ -10,16 +10,16 @@ import (
 
 func handleFetch(req api.HandleUpdateJSONRequestBody, text string) {
 	if len(strings.Split(text, " ")) != 2 {
-		fmt.Println("Invalid number of arguments")
+		log.Println("Invalid number of arguments")
 		logger.Log("Invalid number of arguments")
 	}
 
 	content, err := detect.Fetch(text)
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Println(err.Error())
 		logger.Log(err.Error())
 	}
-	fmt.Println(content)
+	log.Println(content)
 	logger.Log(content)
 
 	replyParams := TgMessageReplyParameters{

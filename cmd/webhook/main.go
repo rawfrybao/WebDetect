@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	"log"
 	"os"
 	"webdetect/internal/logger"
 	"webdetect/internal/server"
@@ -11,7 +11,7 @@ import (
 func main() {
 	err := webhook.SetupWebhook()
 	if err != nil {
-		fmt.Println(err.Error())
+		log.Println(err.Error())
 		logger.Log(err.Error())
 		os.Exit(1)
 	}

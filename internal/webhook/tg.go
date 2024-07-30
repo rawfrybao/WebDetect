@@ -1,7 +1,7 @@
 package webhook
 
 import (
-	"fmt"
+	"log"
 	"webdetect/internal/db"
 	"webdetect/internal/logger"
 )
@@ -9,7 +9,7 @@ import (
 func NotifyUsers(taskId int64, content, prev_content string) {
 	users, err := db.GetUsersWithTask(taskId)
 	if err != nil {
-		fmt.Println(err)
+		log.Println(err)
 		logger.Log(err)
 		return
 	}
@@ -21,19 +21,19 @@ func NotifyUsers(taskId int64, content, prev_content string) {
 
 		subscription, err := db.GetSubscriptionByTaskID(user.ID, taskId)
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
 			logger.Log(err)
 			continue
 		}
 
 		task, err := db.GetTask(taskId)
 		if err != nil {
-			fmt.Println(err)
+			log.Println(err)
 			logger.Log(err)
 			continue
 		}
 
-		fmt.Println(subscription.Name, prev_content, content)
+		log.Println(subscription.Name, prev_content, content)
 		logger.Log(subscription.Name, prev_content, content)
 		// Notify user
 		text := "#" + subscription.Name + "  \nFrom: " + prev_content + "  \nTo: " + content + "  \n[Link](" + task.URL + ")"

@@ -2,8 +2,8 @@ package webhook
 
 import (
 	"encoding/json"
-	"fmt"
 	"io"
+	"log"
 	"net/http"
 	"net/url"
 	"os"
@@ -39,7 +39,7 @@ func SetupWebhook() error {
 		botToken = "123456:ABC-DEF1234ghIkl-zyx57W2v1u123ew11"
 		//return fmt.Errorf("TG_BOT_TOKEN is not set")
 	}
-	fmt.Println("Bot token: ", botToken)
+	log.Println("Bot token: ", botToken)
 	logger.Log("Bot token: ", botToken)
 
 	apiURL := os.Getenv("TG_API_URL")
@@ -65,9 +65,9 @@ func SetupWebhook() error {
 	form := url.Values{}
 	form.Add("url", webhook.Url)
 
-	fmt.Println("Sending request to: ", apiURL)
+	log.Println("Sending request to: ", apiURL)
 	logger.Log("Sending request to: ", apiURL)
-	fmt.Println("Prarams: ", form)
+	log.Println("Prarams: ", form)
 	logger.Log("Prarams: ", form)
 	// Send the POST request
 	resp, err := http.PostForm(apiURL, form)
@@ -82,7 +82,7 @@ func SetupWebhook() error {
 		return err
 	}
 
-	fmt.Println("setWebhook Response: ", string(response))
+	log.Println("setWebhook Response: ", string(response))
 	logger.Log("setWebhook Response: ", string(response))
 
 	return nil

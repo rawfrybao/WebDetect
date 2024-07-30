@@ -2,6 +2,7 @@ package main
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"webdetect/internal/detect"
 	"webdetect/internal/logger"
@@ -22,6 +23,6 @@ func main() {
 
 	content := detect.GetContent(*url, *xpath)
 
-	fmt.Println(content)
+	log.Println(content)
 	logger.Log(content)
 }
