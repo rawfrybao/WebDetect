@@ -23,4 +23,4 @@ EXPOSE 6969
 
 # Command to run the executable
 #CMD ["supervisord -c /etc/supervisor/supervisord.conf"]
-CMD ["/app/bin/webhook"]
+ENTRYPOINT [ "/app/bin/webhook" ]

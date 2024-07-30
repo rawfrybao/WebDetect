@@ -10,7 +10,7 @@ servers:
 tags:
     - name: Update
 paths:
-    /update:
+    /:
         post:
             tags:
                 - Update
