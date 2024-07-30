@@ -3,6 +3,7 @@ package webhook
 import (
 	"bytes"
 	"encoding/json"
+	"fmt"
 	"net/http"
 	"os"
 	"strings"
@@ -18,7 +19,9 @@ func SendMessage(message TgMessage) {
 
 	url := apiURL + "/bot" + botToken + "/sendMessage"
 
+	fmt.Println(url)
 	logger.Log(url)
+	fmt.Println(message)
 	logger.Log(message)
 
 	jsonData, err := json.Marshal(message)

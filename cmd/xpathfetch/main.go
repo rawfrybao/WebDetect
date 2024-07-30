@@ -22,5 +22,6 @@ func main() {
 
 	content := detect.GetContent(*url, *xpath)
 
+	fmt.Println(content)
 	logger.Log(content)
 }
