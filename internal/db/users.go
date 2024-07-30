@@ -202,9 +202,10 @@ func GetUsersWithTask(taskId int64) ([]User, error) {
 	for rows.Next() {
 		var id int64
 		var tgId int64
+		var chatId int64
 		var isAdmin bool
 		var hasAccess bool
-		err = rows.Scan(&id, &tgId, &isAdmin, &hasAccess)
+		err = rows.Scan(&id, &tgId, &chatId, &isAdmin, &hasAccess)
 		if err != nil {
 			return nil, fmt.Errorf("could not scan row: %w", err)
 		}
@@ -212,6 +213,7 @@ func GetUsersWithTask(taskId int64) ([]User, error) {
 		users = append(users, User{
 			ID:        id,
 			TGID:      tgId,
+			ChatID:    chatId,
 			IsAdmin:   isAdmin,
 			HasAccess: hasAccess,
 		})
