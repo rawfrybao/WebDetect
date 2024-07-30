@@ -13,14 +13,19 @@ func handleFetch(req api.HandleUpdateJSONRequestBody, text string) {
 		log.Println("Invalid number of arguments")
 		logger.Log("Invalid number of arguments")
 
+		replyParams := TgMessageReplyParameters{
+			MessageID: *req.Message.MessageID,
+			ChatID:    *req.Message.Chat.ID,
+		}
+
 		msg := "参数不对  \n"
 		msg += "使用方法：  \n"
 		msg += "/fetch <url> <xpath>  \n"
 
 		message := TgMessage{
-			ChatID:    *req.Message.Chat.ID,
-			Text:      msg,
-			ParseMode: "MarkdownV2",
+			ChatID:          *req.Message.Chat.ID,
+			Text:            msg,
+			ReplyParameters: &replyParams,
 		}
 
 		go SendMessage(message)

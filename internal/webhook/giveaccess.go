@@ -2,12 +2,13 @@ package webhook
 
 import (
 	"log"
+	"strconv"
 	"webdetect/internal/api"
 	"webdetect/internal/db"
 	"webdetect/internal/logger"
 )
 
-func handleGiveAccess(req api.HandleUpdateJSONRequestBody) {
+func handleGiveAccess(req api.HandleUpdateJSONRequestBody, text string) {
 	isAdmin, err := db.CheckIsAdmin(*req.Message.From.ID)
 	if err != nil {
 		log.Println(err.Error())
@@ -46,7 +47,7 @@ func handleGiveAccess(req api.HandleUpdateJSONRequestBody) {
 		return
 	}
 
-	if req.Message.ReplyToMessage == nil {
+	if text == "" && req.Message.ReplyToMessage == nil {
 		replyParams := TgMessageReplyParameters{
 			MessageID: *req.Message.MessageID,
 			ChatID:    *req.Message.Chat.ID,
@@ -64,7 +65,36 @@ func handleGiveAccess(req api.HandleUpdateJSONRequestBody) {
 		return
 	}
 
-	targetId := *req.Message.ReplyToMessage.From.ID
+	var targetId int64
+
+	if text != "" {
+		idInt, err := strconv.Atoi(text)
+		if err != nil {
+			log.Println(err.Error())
+			logger.Log(err.Error())
+
+			replyParams := TgMessageReplyParameters{
+				MessageID: *req.Message.MessageID,
+				ChatID:    *req.Message.Chat.ID,
+			}
+
+			msg := "回复一个消息或者输入对方的TG ID"
+
+			message := TgMessage{
+				ChatID:          *req.Message.Chat.ID,
+				Text:            msg,
+				ReplyParameters: &replyParams,
+			}
+
+			go SendMessage(message)
+			return
+		}
+
+		targetId = int64(idInt)
+	} else {
+		targetId = *req.Message.ReplyToMessage.From.ID
+	}
+
 	err = db.SetHasAccess(targetId, true)
 	if err != nil {
 		log.Println(err.Error())

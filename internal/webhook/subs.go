@@ -134,12 +134,18 @@ func handleDeleteSubscription(req api.HandleUpdateJSONRequestBody, text string) 
 	if err != nil {
 		log.Println(err.Error())
 		logger.Log(err.Error())
+
+		replyParams := TgMessageReplyParameters{
+			MessageID: *req.Message.MessageID,
+			ChatID:    *req.Message.Chat.ID,
+		}
+
 		msg := "遇到bug了"
 
 		message := TgMessage{
-			ChatID:    *req.Message.Chat.ID,
-			Text:      msg,
-			ParseMode: "MarkdownV2",
+			ChatID:          *req.Message.Chat.ID,
+			Text:            msg,
+			ReplyParameters: &replyParams,
 		}
 		go SendMessage(message)
 		return
@@ -148,12 +154,18 @@ func handleDeleteSubscription(req api.HandleUpdateJSONRequestBody, text string) 
 	if !hasAccess {
 		log.Println("User does not have access")
 		logger.Log("User does not have access")
+
+		replyParams := TgMessageReplyParameters{
+			MessageID: *req.Message.MessageID,
+			ChatID:    *req.Message.Chat.ID,
+		}
+
 		msg := "你不行"
 
 		message := TgMessage{
-			ChatID:    *req.Message.Chat.ID,
-			Text:      msg,
-			ParseMode: "MarkdownV2",
+			ChatID:          *req.Message.Chat.ID,
+			Text:            msg,
+			ReplyParameters: &replyParams,
 		}
 		go SendMessage(message)
 		return

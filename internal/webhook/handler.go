@@ -37,7 +37,7 @@ func (h *UpdateHandler) HandleUpdate(w http.ResponseWriter, r *http.Request) *ap
 	case "/delsub":
 		go handleDeleteSubscription(req, text)
 	case "/giveaccess":
-		go handleGiveAccess(req)
+		go handleGiveAccess(req, text)
 	}
 
 	code := http.StatusOK
