@@ -73,10 +73,12 @@ func SetupWebhook() error {
 
 	defer resp.Body.Close()
 
-	_, err = io.ReadAll(resp.Body)
+	response, err := io.ReadAll(resp.Body)
 	if err != nil {
 		return err
 	}
+
+	logger.Log("setWebhook Response: ", string(response))
 
 	return nil
 }
