@@ -23,7 +23,7 @@ func handleFetch(req api.HandleUpdateJSONRequestBody, text string) {
 			ParseMode: "MarkdownV2",
 		}
 
-		SendMessage(message)
+		go SendMessage(message)
 		return
 	}
 
@@ -47,7 +47,7 @@ func handleFetch(req api.HandleUpdateJSONRequestBody, text string) {
 			ReplyParameters: &replyParams,
 		}
 
-		SendMessage(message)
+		go SendMessage(message)
 		return
 	}
 	log.Println(content)
@@ -65,5 +65,5 @@ func handleFetch(req api.HandleUpdateJSONRequestBody, text string) {
 		ReplyParameters: &replyParams,
 	}
 
-	SendMessage(message)
+	go SendMessage(message)
 }

@@ -29,6 +29,6 @@ func handleStart(req api.HandleUpdateJSONRequestBody) {
 		ReplyParameters: &replyParams,
 	}
 
-	SendMessage(message)
+	go SendMessage(message)
 
 }

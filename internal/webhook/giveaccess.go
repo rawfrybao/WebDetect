@@ -24,7 +24,7 @@ func handleGiveAccess(req api.HandleUpdateJSONRequestBody) {
 			Text:            msg,
 			ReplyParameters: &replyParams,
 		}
-		SendMessage(message)
+		go SendMessage(message)
 		return
 	}
 
@@ -42,7 +42,7 @@ func handleGiveAccess(req api.HandleUpdateJSONRequestBody) {
 			ReplyParameters: &replyParams,
 		}
 
-		SendMessage(message)
+		go SendMessage(message)
 		return
 	}
 
@@ -60,7 +60,7 @@ func handleGiveAccess(req api.HandleUpdateJSONRequestBody) {
 			ReplyParameters: &replyParams,
 		}
 
-		SendMessage(message)
+		go SendMessage(message)
 		return
 	}
 
@@ -82,7 +82,7 @@ func handleGiveAccess(req api.HandleUpdateJSONRequestBody) {
 			Text:            msg,
 			ReplyParameters: &replyParams,
 		}
-		SendMessage(message)
+		go SendMessage(message)
 		return
 	}
 
@@ -99,5 +99,5 @@ func handleGiveAccess(req api.HandleUpdateJSONRequestBody) {
 		ReplyParameters: &replyParams,
 	}
 
-	SendMessage(message)
+	go SendMessage(message)
 }

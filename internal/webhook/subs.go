@@ -37,7 +37,7 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 
 			ReplyParameters: &replyParams,
 		}
-		SendMessage(message)
+		go SendMessage(message)
 		return
 	}
 
@@ -57,7 +57,7 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 
 			ReplyParameters: &replyParams,
 		}
-		SendMessage(message)
+		go SendMessage(message)
 		return
 	}
 
@@ -78,7 +78,7 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 
 			ReplyParameters: &replyParams,
 		}
-		SendMessage(message)
+		go SendMessage(message)
 		return
 	}
 
@@ -106,7 +106,7 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 
 			ReplyParameters: &replyParams,
 		}
-		SendMessage(message)
+		go SendMessage(message)
 		return
 	}
 
@@ -126,7 +126,7 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 
 		ReplyParameters: &replyParams,
 	}
-	SendMessage(message)
+	go SendMessage(message)
 }
 
 func handleDeleteSubscription(req api.HandleUpdateJSONRequestBody, text string) {
@@ -180,7 +180,7 @@ func handleDeleteSubscription(req api.HandleUpdateJSONRequestBody, text string) 
 
 			ReplyParameters: &replyParams,
 		}
-		SendMessage(message)
+		go SendMessage(message)
 		return
 	}
 
@@ -198,7 +198,7 @@ func handleDeleteSubscription(req api.HandleUpdateJSONRequestBody, text string) 
 		ReplyParameters: &replyParams,
 	}
 
-	SendMessage(message)
+	go SendMessage(message)
 }
 
 func handleListSubscription(req api.HandleUpdateJSONRequestBody) {
@@ -222,7 +222,7 @@ func handleListSubscription(req api.HandleUpdateJSONRequestBody) {
 			Text:            msg,
 			ReplyParameters: &replyParams,
 		}
-		SendMessage(message)
+		go SendMessage(message)
 		return
 	}
 
@@ -242,5 +242,5 @@ func handleListSubscription(req api.HandleUpdateJSONRequestBody) {
 		ReplyParameters: &replyParams,
 	}
 
-	SendMessage(message)
+	go SendMessage(message)
 }
