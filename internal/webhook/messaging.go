@@ -21,8 +21,8 @@ func SendMessage(message TgMessage) {
 
 	log.Println(url)
 	logger.Log(url)
-	log.Println(message)
-	logger.Log(message)
+	log.Println("Send: " + message.Text)
+	logger.Log("Send: " + message.Text)
 
 	jsonData, err := json.Marshal(message)
 	if err != nil {

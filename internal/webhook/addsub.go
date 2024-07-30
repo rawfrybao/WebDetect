@@ -81,7 +81,8 @@ func handleAddSubscription(req api.HandleUpdateJSONRequestBody, text string) {
 			ChatID:    *req.Message.Chat.ID,
 		}
 
-		msg := err.Error()
+		msg := "添加失败  \n"
+		msg += err.Error()
 
 		message := TgMessage{
 			ChatID:          *req.Message.Chat.ID,
