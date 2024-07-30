@@ -39,9 +39,8 @@ func NotifyUsers(taskId int64, content, prev_content string) {
 		text := "#" + subscription.Name + "  \nFrom: " + prev_content + "  \nTo: " + content + "  \n[Link](" + task.URL + ")"
 
 		message := TgMessage{
-			ChatID:    user.ChatID,
-			Text:      text,
-			ParseMode: "MarkdownV2",
+			ChatID: user.ChatID,
+			Text:   text,
 		}
 
 		go SendMessage(message)
