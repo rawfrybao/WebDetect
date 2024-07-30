@@ -89,4 +89,5 @@ sed -i "s/your_db_username/$dbuser/g" docker-compose.yml
 sed -i "s/your_db_password/$dbpass/g" docker-compose.yml
 sed -i "s/your_db_port/$dbport/g" docker-compose.yml
 
+docker compose build
 docker compose up -d

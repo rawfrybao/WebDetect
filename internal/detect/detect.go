@@ -16,6 +16,7 @@ func GetContent(url, xpath string) string {
 		log.Println(err)
 		log.Println(err)
 		logger.Log(err)
+		return ""
 	}
 	defer resp.Body.Close()
 
@@ -24,6 +25,7 @@ func GetContent(url, xpath string) string {
 	if err != nil {
 		log.Println(err)
 		logger.Log(err)
+		return ""
 	}
 
 	// Use XPath to find the desired content
@@ -32,6 +34,7 @@ func GetContent(url, xpath string) string {
 	if err != nil {
 		log.Println(err)
 		logger.Log(err)
+		return ""
 	}
 	if len(nodes) == 0 {
 		log.Println("No nodes found")

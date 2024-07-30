@@ -32,6 +32,8 @@ func (h *UpdateHandler) HandleUpdate(w http.ResponseWriter, r *http.Request) *ap
 		go handleFetch(req, text)
 	case "/addsub":
 		go handleAddSubscription(req, text)
+	case "/delsub":
+		go handleDeleteSubscription(req, text)
 	}
 
 	code := http.StatusOK

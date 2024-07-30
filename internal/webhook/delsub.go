@@ -4,41 +4,54 @@ import (
 	"log"
 	"strings"
 	"webdetect/internal/api"
-	"webdetect/internal/detect"
+	"webdetect/internal/db"
 	"webdetect/internal/logger"
 )
 
-func handleFetch(req api.HandleUpdateJSONRequestBody, text string) {
-	if len(strings.Split(text, " ")) != 2 {
-		log.Println("Invalid number of arguments")
-		logger.Log("Invalid number of arguments")
-
-		msg := "参数不对  \n"
-		msg += "使用方法：  \n"
-		msg += "/fetch <url> <xpath>  \n"
+func handleDeleteSubscription(req api.HandleUpdateJSONRequestBody, text string) {
+	hasAccess, err := db.CheckHasAccess(*req.Message.From.ID)
+	if err != nil {
+		log.Println(err.Error())
+		logger.Log(err.Error())
+		msg := "遇到bug了"
 
 		message := TgMessage{
 			ChatID:    *req.Message.Chat.ID,
 			Text:      msg,
 			ParseMode: "MarkdownV2",
 		}
-
 		go SendMessage(message)
 		return
 	}
 
-	content, err := detect.Fetch(text)
+	if !hasAccess {
+		log.Println("User does not have access")
+		logger.Log("User does not have access")
+		msg := "你不行"
+
+		message := TgMessage{
+			ChatID:    *req.Message.Chat.ID,
+			Text:      msg,
+			ParseMode: "MarkdownV2",
+		}
+		go SendMessage(message)
+		return
+	}
+
+	name := strings.Split(text, " ")[0]
+
+	err = db.DeleteSubscription(*req.Message.From.ID, name)
 	if err != nil {
 		log.Println(err.Error())
 		logger.Log(err.Error())
-
-		msg := "获取失败  \n"
-		msg += err.Error()
 
 		replyParams := TgMessageReplyParameters{
 			MessageID: *req.Message.MessageID,
 			ChatID:    *req.Message.Chat.ID,
 		}
+
+		msg := "删除失败  \n"
+		msg += err.Error()
 
 		message := TgMessage{
 			ChatID:          *req.Message.Chat.ID,
@@ -46,21 +59,20 @@ func handleFetch(req api.HandleUpdateJSONRequestBody, text string) {
 			ParseMode:       "MarkdownV2",
 			ReplyParameters: &replyParams,
 		}
-
 		go SendMessage(message)
 		return
 	}
-	log.Println(content)
-	logger.Log(content)
 
 	replyParams := TgMessageReplyParameters{
 		MessageID: *req.Message.MessageID,
 		ChatID:    *req.Message.Chat.ID,
 	}
 
+	msg := "删除成功（也许）"
+
 	message := TgMessage{
 		ChatID:          *req.Message.Chat.ID,
-		Text:            content,
+		Text:            msg,
 		ParseMode:       "MarkdownV2",
 		ReplyParameters: &replyParams,
 	}

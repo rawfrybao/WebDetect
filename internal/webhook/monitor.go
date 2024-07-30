@@ -14,10 +14,15 @@ func Monitor() {
 		if err != nil {
 			log.Println(err)
 			logger.Log(err)
+
+			time.Sleep(5 * time.Minute)
+			continue
 		}
 
 		for _, task := range tasks {
 			content := detect.GetContent(task.URL, task.XPath)
+
+			logger.Log("Task", task.ID, "Content", content, "PrevContent", task.PrevContent)
 
 			if content == task.PrevContent {
 				continue
