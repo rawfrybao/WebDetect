@@ -2,6 +2,7 @@ package webhook
 
 import (
 	"log"
+	"strconv"
 	"time"
 	"webdetect/internal/db"
 	"webdetect/internal/detect"
@@ -22,9 +23,10 @@ func Monitor() {
 		for _, task := range tasks {
 			content := detect.GetContent(task.URL, task.XPath)
 
-			logger.Log("Task", task.ID, "Content", content, "PrevContent", task.PrevContent)
+			logger.Log("Task", strconv.FormatInt(task.ID, 10), "Content", content, "PrevContent", task.PrevContent)
 
 			if content == task.PrevContent {
+				logger.Log(content, "is the same as", task.PrevContent)
 				continue
 			}
 
