@@ -30,6 +30,8 @@ func (h *UpdateHandler) HandleUpdate(w http.ResponseWriter, r *http.Request) *ap
 		go handleStart(req)
 	case "/fetch":
 		go handleFetch(req, text)
+	case "/info":
+		go handleInfo(req)
 	case "/listsub":
 		go handleListSubscription(req)
 	case "/addsub":

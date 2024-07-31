@@ -130,36 +130,6 @@ func SetHasAccess(tgId int64, hasAccess bool) error {
 	return nil
 }
 
-func SetChat(tgId int64, chatId int64) error {
-	conn, err := NewPostgresConnection()
-	if err != nil {
-		return fmt.Errorf("could not connect to database: %w", err)
-	}
-	defer conn.Close(context.Background())
-
-	// Check if user exists
-	var exists bool
-	err = conn.QueryRow(context.Background(), "SELECT EXISTS(SELECT 1 FROM users WHERE tg_id = $1)", tgId).Scan(&exists)
-	if err != nil {
-		return fmt.Errorf("could not query database: %w", err)
-	}
-
-	if !exists {
-		_, err = conn.Exec(context.Background(), "INSERT INTO users (tg_id, chat_id) VALUES ($1, $2)", tgId, chatId)
-		if err != nil {
-			return fmt.Errorf("could not insert into database: %w", err)
-		}
-		return nil
-	}
-
-	_, err = conn.Exec(context.Background(), "UPDATE users SET chat_id = $1 WHERE tg_id = $2", chatId, tgId)
-	if err != nil {
-		return fmt.Errorf("could not update database: %w", err)
-	}
-
-	return nil
-}
-
 func CheckIsAdmin(tgId int64) (bool, error) {
 	conn, err := NewPostgresConnection()
 	if err != nil {
@@ -256,4 +226,20 @@ func UpdateChatIDByUserID(userId, chatId int64) error {
 	}
 
 	return nil
+}
+
+func GetUserByTGID(tgId int64) (User, error) {
+	conn, err := NewPostgresConnection()
+	if err != nil {
+		return User{}, fmt.Errorf("could not connect to database: %w", err)
+	}
+	defer conn.Close(context.Background())
+
+	var user User
+	err = conn.QueryRow(context.Background(), "SELECT * FROM users WHERE tg_id = $1", tgId).Scan(&user.ID, &user.TGID, &user.ChatID, &user.IsAdmin, &user.HasAccess)
+	if err != nil {
+		return User{}, fmt.Errorf("could not query database: %w", err)
+	}
+
+	return user, nil
 }
