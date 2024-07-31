@@ -23,7 +23,10 @@ func NewUser(tgId, chatId int64) error {
 		return fmt.Errorf("user with tg_id %d already exists", tgId)
 	}
 
-	_, err = conn.Exec(context.Background(), "INSERT INTO users (tg_id, chat_id) VALUES ($1, $2)", tgId, chatId)
+	isAdmin := false
+	hasAccess := false
+
+	_, err = conn.Exec(context.Background(), "INSERT INTO users (tg_id, chat_id, is_admin, has_access) VALUES ($1, $2)", tgId, chatId, isAdmin, hasAccess)
 	if err != nil {
 		return fmt.Errorf("could not insert into database: %w", err)
 	}
@@ -47,9 +50,10 @@ func GetUsers() ([]User, error) {
 	for rows.Next() {
 		var id int64
 		var tgId int64
+		var chatId int64
 		var isAdmin bool
 		var hasAccess bool
-		err = rows.Scan(&id, &tgId, &isAdmin, &hasAccess)
+		err = rows.Scan(&id, &tgId, &chatId, &isAdmin, &hasAccess)
 		if err != nil {
 			return nil, fmt.Errorf("could not scan row: %w", err)
 		}
@@ -57,6 +61,7 @@ func GetUsers() ([]User, error) {
 		users = append(users, User{
 			ID:        id,
 			TGID:      tgId,
+			ChatID:    chatId,
 			IsAdmin:   isAdmin,
 			HasAccess: hasAccess,
 		})
@@ -236,4 +241,19 @@ func GetSubscriptionByTaskID(userId, taskId int64) (Subscription, error) {
 	}
 
 	return subscription, nil
+}
+
+func UpdateChatIDByUserID(userId, chatId int64) error {
+	conn, err := NewPostgresConnection()
+	if err != nil {
+		return fmt.Errorf("could not connect to database: %w", err)
+	}
+	defer conn.Close(context.Background())
+
+	_, err = conn.Exec(context.Background(), "UPDATE users SET chat_id = $1 WHERE id = $2", chatId, userId)
+	if err != nil {
+		return fmt.Errorf("could not update database: %w", err)
+	}
+
+	return nil
 }

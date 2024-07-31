@@ -12,10 +12,56 @@ func handleStart(req api.HandleUpdateJSONRequestBody) {
 	logger.Log("Start command", *req.Message.From.ID)
 
 	// Check if the user is in the database
-	_, err := db.GetUserIDByTGID(*req.Message.From.ID)
+	userId, err := db.GetUserIDByTGID(*req.Message.From.ID)
 	if err != nil {
+		log.Println(err.Error())
+		logger.Log(err.Error())
 		// If the user is not in the database, add them
 		err := db.NewUser(*req.Message.From.ID, *req.Message.Chat.ID)
+		if err != nil {
+			log.Println(err.Error())
+			logger.Log(err.Error())
+
+			replyParams := TgMessageReplyParameters{
+				MessageID: *req.Message.MessageID,
+				ChatID:    *req.Message.Chat.ID,
+			}
+
+			msg := "遇到bug了"
+
+			message := TgMessage{
+				ChatID:          *req.Message.Chat.ID,
+				Text:            msg,
+				ReplyParameters: &replyParams,
+			}
+			go SendMessage(message)
+			return
+		}
+	}
+
+	chatId, err := db.GetChatIDByUserID(userId)
+	if err != nil {
+		log.Println(err.Error())
+		logger.Log(err.Error())
+
+		replyParams := TgMessageReplyParameters{
+			MessageID: *req.Message.MessageID,
+			ChatID:    *req.Message.Chat.ID,
+		}
+
+		msg := "遇到bug了"
+
+		message := TgMessage{
+			ChatID:          *req.Message.Chat.ID,
+			Text:            msg,
+			ReplyParameters: &replyParams,
+		}
+		go SendMessage(message)
+		return
+	}
+
+	if chatId != *req.Message.Chat.ID {
+		err := db.UpdateChatIDByUserID(userId, *req.Message.Chat.ID)
 		if err != nil {
 			log.Println(err.Error())
 			logger.Log(err.Error())
