@@ -2,6 +2,7 @@ package webhook
 
 import (
 	"log"
+	"time"
 	"webdetect/internal/api"
 	"webdetect/internal/db"
 	"webdetect/internal/logger"
@@ -37,6 +38,7 @@ func handleStart(req api.HandleUpdateJSONRequestBody) {
 			go SendMessage(message)
 			return
 		}
+		time.Sleep(1 * time.Second)
 	}
 
 	chatId, err := db.GetChatIDByUserID(userId)
