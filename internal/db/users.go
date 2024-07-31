@@ -26,7 +26,7 @@ func NewUser(tgId, chatId int64) error {
 	isAdmin := false
 	hasAccess := false
 
-	_, err = conn.Exec(context.Background(), "INSERT INTO users (tg_id, chat_id, is_admin, has_access) VALUES ($1, $2)", tgId, chatId, isAdmin, hasAccess)
+	_, err = conn.Exec(context.Background(), "INSERT INTO users (tg_id, chat_id, is_admin, has_access) VALUES ($1, $2, $3, $4)", tgId, chatId, isAdmin, hasAccess)
 	if err != nil {
 		return fmt.Errorf("could not insert into database: %w", err)
 	}
