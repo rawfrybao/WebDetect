@@ -1,6 +1,7 @@
 services:
   webdetect:
     build: .
+    restart: always
     ports:
       - "your_webhook_port:6969"
     extra_hosts:
@@ -17,6 +18,7 @@ services:
       - DATABASE_URL=postgres://your_db_username:your_db_password@postgresdb:your_db_port/your_db_name
   postgresdb:
     image: "postgres:15.7-bullseye"
+    restart: always
     volumes:
       - $HOME/db-data:/var/lib/postgresql/data
       - ./db-init:/docker-entrypoint-initdb.d
